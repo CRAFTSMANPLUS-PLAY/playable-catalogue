@@ -463,28 +463,18 @@
       flex: 1;
     }
 
-    /* Phone shell */
+    /* Phone shell — clean frame, no notch */
     .phone {
       width: 252px;
       height: 528px;
       background: #0D0D0F;
-      border-radius: 40px;
+      border-radius: 18px;
       border: 2px solid #2C2C30;
-      box-shadow: 0 0 0 1px rgba(0,0,0,0.6), 0 24px 72px rgba(0,0,0,0.7), inset 0 0 0 1px rgba(255,255,255,0.03);
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.6), 0 24px 72px rgba(0,0,0,0.7);
       overflow: hidden;
       position: relative;
     }
-    .phone::before {
-      content: '';
-      position: absolute;
-      top: 10px; left: 50%;
-      transform: translateX(-50%);
-      width: 76px; height: 20px;
-      background: #0D0D0F;
-      border-radius: 20px;
-      z-index: 10;
-    }
-    .phone iframe { width: 100%; height: 100%; border: none; }
+    .phone iframe { width: 100%; height: 100%; border: none; display: block; }
 
     /* Tags row */
     .modal-tags-row {
@@ -746,15 +736,6 @@
       tags: ['horseplay', 'casino', 'slots'],
       previewUrl: 'https://play.preview.craftsmanplus.com/preview?portrait=true&playable=https://endpoints.prod.craftsmanplus.com/exports/B4ywPtmctbf/iY3mkFNXPOT/Default_Desktop__partner_template.html&companyId=B630HMOcIup',
       thumbnail: 'thumbnails/horseplay-lady-lava.jpg'
-    },
-    {
-      id: 's6',
-      company: 'Live Play',
-      title: 'Bingo — Board Drop',
-      category: 'Gambling',
-      tags: ['bingo', 'casino', 'live play'],
-      previewUrl: 'https://play.preview.craftsmanplus.com/preview?portrait=true&playable=https://s3.us-east-1.amazonaws.com/production-elasticbeanstalk-environmen-databucket-1v9icak6ecq6y/1668202271278_1668202271278.html',
-      thumbnail: 'thumbnails/liveplay-bingo-board-drop.jpg'
     },
     {
       id: 's7',
