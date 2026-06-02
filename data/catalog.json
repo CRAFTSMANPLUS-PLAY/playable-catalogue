@@ -1,0 +1,34 @@
+[
+  {
+    "Title": "MLB 9 Innings",
+    "Company": "Com2uS",
+    "Genre": "Gaming",
+    "URL": "https://play.preview.craftsmanplus.com/preview/?example",
+    "Endpoint URL": "https://endpoints.prod.craftsmanplus.com/example/index.html",
+    "thumbnail": "mlb9innings.png"
+  },
+  {
+    "Title": "Hoops Clash",
+    "Company": "YesGnome",
+    "Genre": "Gaming",
+    "URL": "https://play.preview.craftsmanplus.com/preview/?example",
+    "Endpoint URL": "https://endpoints.prod.craftsmanplus.com/example/index.html",
+    "thumbnail": "hoops-clash.png"
+  },
+  {
+    "Title": "Kindle",
+    "Company": "Amazon",
+    "Genre": "Brand",
+    "URL": "https://play.preview.craftsmanplus.com/preview/?example",
+    "Endpoint URL": "https://endpoints.prod.craftsmanplus.com/example/index.html",
+    "thumbnail": "kindle.png"
+  },
+  {
+    "Title": "Soul",
+    "Company": "Disney",
+    "Genre": "Brand",
+    "URL": "https://play.preview.craftsmanplus.com/preview/?example",
+    "Endpoint URL": "https://endpoints.prod.craftsmanplus.com/example/index.html",
+    "thumbnail": "soul.png"
+  }
+]
