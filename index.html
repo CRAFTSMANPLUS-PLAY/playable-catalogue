@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#09090B" />
+  <title>CRAFTSMAN+ • Playable Catalog</title>
+
+  <style>
+    :root {
+      --bg:          #09090B;
+      --bg-raised:   #111113;
+      --surface:     #18181B;
+      --surface-2:   #1F1F23;
+      --surface-3:   #27272A;
+      --border:      #27272A;
+      --border-2:    #3F3F46;
+      --text:        #FAFAFA;
+      --text-2:      #A1A1AA;
+      --text-3:      #52525B;
+      --orange:      #F86400;
+      --orange-soft: #FF8C38;
+      --orange-dim:  #2C1500;
+      --amber:       #F59E0B;
+      --amber-dim:   #1C1000;
+      --blue:        #60A5FA;
+      --blue-dim:    #0C1A2E;
+      --emerald:     #34D399;
+      --emerald-dim: #051A10;
+      --radius:      6px;
+      --radius-lg:   10px;
+      --trans:       0.16s cubic-bezier(0.4,0,0.2,1);
+      --font:        'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --serif:       'Playfair Display', Georgia, serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 14px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ─────────────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      padding: 0 28px;
+      justify-content: space-between;
+      background: rgba(9,9,11,0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      gap: 16px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .nav-wordmark {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+    .nav-sep { width: 1px; height: 16px; background: var(--border-2); }
+    .nav-sub {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      font-weight: 500;
+    }
+
+    .nav-search {
+      flex: 1;
+      max-width: 400px;
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .nav-search-icon {
+      position: absolute;
+      left: 10px;
+      color: var(--text-3);
+      pointer-events: none;
+      display: flex;
+    }
+    .nav-search input {
+      width: 100%;
+      font-family: var(--font);
+      font-size: 13px;
+      color: var(--text);
+      background: var(--surface);
+      border: 1px solid var(--border-2);
+      border-radius: 100px;
+      padding: 6px 12px 6px 30px;
+      outline: none;
+      transition: all var(--trans);
+    }
+    .nav-search input::placeholder { color: var(--text-3); }
+    .nav-search input:focus {
+      border-color: var(--orange);
+      box-shadow: 0 0 0 2px rgba(248,100,0,0.15);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .nav-select {
+      font-family: var(--font);
+      font-size: 12px;
+      color: var(--text-2);
+      background: var(--surface);
+      border: 1px solid var(--border-2);
+      border-radius: 100px;
+      padding: 5px 12px;
+      outline: none;
+      cursor: pointer;
+      transition: all var(--trans);
+    }
+    .nav-select:focus { border-color: var(--orange); }
+
+    /* ── HERO ────────────────────────────────────────────────── */
+    .hero {
+      padding: 56px 28px 44px;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -80px; left: -60px;
+      width: 560px; height: 360px;
+      background: radial-gradient(ellipse at 30% 40%, rgba(248,100,0,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--orange);
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 20px; height: 1px;
+      background: var(--orange);
+      opacity: 0.7;
+    }
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(34px, 5vw, 58px);
+      font-weight: 700;
+      line-height: 1.06;
+      color: var(--text);
+      max-width: 580px;
+      margin-bottom: 16px;
+      letter-spacing: -0.01em;
+    }
+    .hero-title em { font-style: italic; color: var(--orange); }
+    .hero-body {
+      font-size: 15px;
+      color: var(--text-2);
+      max-width: 500px;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* ── CONTENT ─────────────────────────────────────────────── */
+    .content { padding: 0 28px 80px; }
+
+    /* ── SECTION ─────────────────────────────────────────────── */
+    .section { padding-top: 36px; }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    .section-label.standouts { color: var(--orange); }
+    .section-label.brand     { color: var(--text-3); }
+    .section-label.gaming    { color: var(--text-3); }
+
+    .section-rule {
+      flex: 1;
+      height: 1px;
+    }
+    .section-rule.standouts { background: linear-gradient(to right, rgba(248,100,0,0.3), transparent); }
+    .section-rule.brand     { background: var(--border); }
+    .section-rule.gaming    { background: var(--border); }
+
+    .section-count {
+      font-size: 10px;
+      color: var(--text-3);
+      letter-spacing: 0.08em;
+      flex-shrink: 0;
+    }
+
+    /* ── GRID ────────────────────────────────────────────────── */
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 16px;
+    }
+
+    /* ── CARD ────────────────────────────────────────────────── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform var(--trans), box-shadow var(--trans), border-color var(--trans), background var(--trans);
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6), 0 0 0 1px rgba(248,100,0,0.15);
+      border-color: rgba(248,100,0,0.3);
+      background: var(--surface-2);
+    }
+    .card.standout { border-top: 2px solid var(--orange); }
+    .card.standout:hover {
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6), 0 0 0 1px rgba(248,100,0,0.35);
+      border-color: var(--orange);
+    }
+    .card.hidden { display: none; }
+
+    /* Thumb */
+    .card-thumb {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 9/16;
+      background: var(--surface-2);
+      overflow: hidden;
+    }
+    .card-thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .card:hover .card-thumb img { transform: scale(1.04); }
+
+    .thumb-ph {
+      width: 100%; height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: linear-gradient(160deg, var(--surface-2) 0%, var(--surface-3) 100%);
+    }
+    .thumb-ph svg { width: 32px; height: 32px; opacity: 0.12; color: var(--text); }
+    .thumb-ph span { font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-3); }
+
+    .standout-badge {
+      position: absolute;
+      top: 8px; right: 8px;
+      font-size: 8px;
+      letter-spacing: 0.14em;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 3px 7px;
+      border-radius: 100px;
+      background: var(--orange);
+      color: #fff;
+    }
+
+    .play-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0);
+      transition: background var(--trans);
+    }
+    .card:hover .play-overlay { background: rgba(0,0,0,0.45); }
+    .play-circle {
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      background: var(--orange);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: scale(0.7);
+      transition: opacity var(--trans), transform var(--trans);
+      box-shadow: 0 2px 20px rgba(248,100,0,0.5);
+    }
+    .card:hover .play-circle { opacity: 1; transform: scale(1); }
+    .play-circle svg { width: 16px; height: 16px; fill: #fff; margin-left: 2px; }
+
+    /* Card footer */
+    .card-footer {
+      padding: 11px 13px 13px;
+      border-top: 1px solid var(--border);
+    }
+    .card-company {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 2px;
+    }
+    .card-title {
+      font-size: 11px;
+      color: var(--text-3);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* ── EMPTY STATE ─────────────────────────────────────────── */
+    .empty-state {
+      grid-column: 1/-1;
+      text-align: center;
+      padding: 80px 20px;
+      display: none;
+    }
+    .empty-state.show { display: block; }
+    .empty-state p { font-size: 14px; color: var(--text-3); }
+
+    /* ── MODAL ───────────────────────────────────────────────── */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(0,0,0,0.78);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+    .overlay.open { opacity: 1; pointer-events: all; }
+
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border-2);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 520px;
+      max-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.7), 0 2px 8px rgba(0,0,0,0.4);
+      transform: translateY(18px) scale(0.97);
+      transition: transform 0.2s cubic-bezier(0.4,0,0.2,1);
+      overflow: hidden;
+    }
+    .overlay.open .modal { transform: translateY(0) scale(1); }
+
+    /* Modal top bar */
+    .modal-head {
+      padding: 13px 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+      background: var(--surface-2);
+    }
+    .modal-head-left { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
+    .modal-cat {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 100px;
+      flex-shrink: 0;
+    }
+    .modal-cat.Casino   { color: var(--amber);   border: 1px solid rgba(245,158,11,0.4); background: var(--amber-dim); }
+    .modal-cat.Lottery  { color: var(--blue);    border: 1px solid rgba(96,165,250,0.4); background: var(--blue-dim); }
+    .modal-cat.Casual   { color: var(--emerald); border: 1px solid rgba(52,211,153,0.4); background: var(--emerald-dim); }
+    .modal-cat.Brand    { color: var(--text-2);  border: 1px solid var(--border-2);      background: var(--surface-3); }
+    .modal-cat.Gaming   { color: var(--text-2);  border: 1px solid var(--border-2);      background: var(--surface-3); }
+    .modal-cat.Gambling { color: var(--amber);   border: 1px solid rgba(245,158,11,0.4); background: var(--amber-dim); }
+    .modal-cat.Betting  { color: var(--amber);   border: 1px solid rgba(245,158,11,0.4); background: var(--amber-dim); }
+    .modal-cat.Bingo    { color: var(--emerald); border: 1px solid rgba(52,211,153,0.4); background: var(--emerald-dim); }
+
+    .modal-title {
+      font-family: var(--serif);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .modal-close {
+      width: 28px; height: 28px;
+      border: 1px solid var(--border-2);
+      border-radius: var(--radius);
+      background: var(--surface-3);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-2);
+      font-size: 17px;
+      font-family: sans-serif;
+      line-height: 1;
+      transition: all var(--trans);
+      flex-shrink: 0;
+      margin-left: 10px;
+    }
+    .modal-close:hover { border-color: var(--orange); color: var(--orange); }
+
+    /* Modal body */
+    .modal-body {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      overflow: hidden;
+      min-height: 0;
+    }
+    .modal-preview {
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 24px 16px;
+      flex: 1;
+    }
+
+    /* Phone shell */
+    .phone {
+      width: 252px;
+      height: 528px;
+      background: #0D0D0F;
+      border-radius: 40px;
+      border: 2px solid #2C2C30;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.6), 0 24px 72px rgba(0,0,0,0.7), inset 0 0 0 1px rgba(255,255,255,0.03);
+      overflow: hidden;
+      position: relative;
+    }
+    .phone::before {
+      content: '';
+      position: absolute;
+      top: 10px; left: 50%;
+      transform: translateX(-50%);
+      width: 76px; height: 20px;
+      background: #0D0D0F;
+      border-radius: 20px;
+      z-index: 10;
+    }
+    .phone iframe { width: 100%; height: 100%; border: none; }
+
+    /* Tags row */
+    .modal-tags-row {
+      background: var(--bg);
+      padding: 0 24px 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .tag {
+      font-size: 10px;
+      color: var(--text-3);
+      background: var(--surface-3);
+      border: 1px solid var(--border-2);
+      padding: 2px 8px;
+      border-radius: 100px;
+    }
+
+    /* Modal footer */
+    .modal-footer {
+      background: var(--bg-raised);
+      border-top: 1px solid var(--border);
+      padding: 12px 18px;
+      display: flex;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .reload-btn {
+      flex: 1;
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 9px 0;
+      border-radius: var(--radius);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all var(--trans);
+    }
+    .reload-btn:hover { background: var(--surface-3); color: var(--text); }
+    .open-btn {
+      flex: 2;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      background: var(--orange);
+      color: #fff;
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 9px 0;
+      border-radius: var(--radius);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background var(--trans), box-shadow var(--trans);
+    }
+    .open-btn:hover { background: var(--orange-soft); box-shadow: 0 0 24px rgba(248,100,0,0.4); }
+    .open-btn svg { width: 13px; height: 13px; }
+
+    /* ── FOOTER ──────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 18px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg-raised);
+    }
+    .footer-left  { font-size: 12px; color: var(--text-3); }
+    .footer-right { font-size: 11px; color: var(--text-3); letter-spacing: 0.1em; text-transform: uppercase; }
+    .footer-accent { color: var(--orange); opacity: 0.8; }
+
+    /* ── RESPONSIVE ──────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      nav { padding: 0 14px; gap: 10px; }
+      .nav-sub { display: none; }
+      .hero, .content, footer { padding-left: 14px; padding-right: 14px; }
+      .catalog-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .modal-body { flex-direction: column; }
+      .nav-search { max-width: 160px; }
+    }
+  </style>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-brand" href="#">
+      <span class="nav-wordmark">CRAFTSMAN+</span>
+      <div class="nav-sep"></div>
+      <span class="nav-sub">Playable Catalog</span>
+    </a>
+    <div class="nav-search">
+      <span class="nav-search-icon">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+          <circle cx="5.5" cy="5.5" r="4" stroke="currentColor" stroke-width="1.3"/>
+          <path d="M9 9L12 12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <input id="searchInput" type="text" placeholder="Search catalog…" />
+    </div>
+    <div class="nav-right">
+      <select id="sectionSelect" class="nav-select">
+        <option value="all">All sections</option>
+        <option value="standouts">Standouts</option>
+        <option value="brand">Brand</option>
+        <option value="gaming">Gaming</option>
+      </select>
+      <select id="companySelect" class="nav-select">
+        <option value="">All clients</option>
+      </select>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-eyebrow">Interactive · Playable · HTML5</p>
+    <h1 class="hero-title">Built to <em>perform.</em><br>Ready to deploy.</h1>
+    <p class="hero-body">A set of playable ad experiences across casino, lottery, casual gaming, and beyond — built on CRAFTSMAN PLAY.</p>
+  </section>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- STANDOUTS -->
+    <div class="section" id="standoutsSection">
+      <div class="section-header">
+        <span class="section-label standouts">★ Standouts</span>
+        <div class="section-rule standouts"></div>
+        <span class="section-count" id="standoutsCount"></span>
+      </div>
+      <div class="catalog-grid" id="standoutsGrid"></div>
+    </div>
+
+    <!-- BRAND -->
+    <div class="section" id="brandSection">
+      <div class="section-header">
+        <span class="section-label brand">Brand</span>
+        <div class="section-rule brand"></div>
+        <span class="section-count" id="brandCount"></span>
+      </div>
+      <div class="catalog-grid" id="brandGrid">
+        <div class="empty-state" id="brandEmpty"><p>No results.</p></div>
+      </div>
+    </div>
+
+    <!-- GAMING -->
+    <div class="section" id="gamingSection">
+      <div class="section-header">
+        <span class="section-label gaming">Gaming</span>
+        <div class="section-rule gaming"></div>
+        <span class="section-count" id="gamingCount"></span>
+      </div>
+      <div class="catalog-grid" id="gamingGrid">
+        <div class="empty-state" id="gamingEmpty"><p>No results.</p></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MODAL -->
+  <div class="overlay" id="overlay" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-head">
+        <div class="modal-head-left">
+          <span class="modal-cat" id="mCat"></span>
+          <span class="modal-title" id="mTitle"></span>
+        </div>
+        <button class="modal-close" id="mClose" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-preview">
+          <div class="phone">
+            <iframe id="mIframe" title="Playable Preview" allow="autoplay; fullscreen" loading="lazy"></iframe>
+          </div>
+        </div>
+        <div class="modal-tags-row" id="mTags"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="reload-btn" id="mReload">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+            <path d="M2 7.5A4.5 4.5 0 1 0 3.5 4M2 2v2.5H4.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Reload
+        </button>
+        <a class="open-btn" id="mExternal" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 13 13" fill="none">
+            <path d="M2 11L11 2M11 2H6.5M11 2V6.5" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Open External
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-left">© 2026 CRAFTSMAN+. All rights reserved.</span>
+    <span class="footer-right"><span class="footer-accent">CRAFTSMAN+</span> · Playable Catalog</span>
+  </footer>
+
+  <script>
+  // ─────────────────────────────────────────────────────────────
+  // STANDOUTS — 11 featured entries (hardcoded)
+  // ─────────────────────────────────────────────────────────────
+  const STANDOUTS = [
+    {
+      id: 's1',
+      company: 'Zynga',
+      title: 'Game of Thrones Slots — Double Spin',
+      category: 'Gambling',
+      tags: ['zynga', 'slots', 'gambling'],
+      previewUrl: 'https://play.preview.craftsmanplus.com/preview/?portrait=true&orientationLocked=true&playable=https://s3.us-east-1.amazonaws.com/production-elasticbeanstalk-environmen-databucket-1v9icak6ecq6y/1648677929451-1648677929451.tmp',
+      thumbnail: 'thumbnails/zynga-got-double-spin.jpg'
+    },
+    {
+      id: 's2',
+      company: 'DraftKings',
+      title: 'Fantasy Sports — Questionnaire Polls',
+      category: 'Gambling',
+      tags: ['draftkings', 'fantasy', 'gambling'],
+      previewUrl: 'https://play.preview.craftsmanplus.com/preview/?portrait=true&orientationLocked=true&playable=https://s3.us-east-1.amazonaws.com/production-elasticbeanstalk-environmen-databucket-1v9icak6ecq6y/1660836400523_1660836400523.tmp',
+      thumbnail: 'thumbnails/dk-questionnaire-polls.jpg'
+    },
+    {
+      id: 's3',
+      company: 'DraftKings',
+      title: 'Sportsbook — Same Game Parlay',
+      category: 'Gambling',
+      tags: ['draftkings', 'sportsbook', 'gambling'],
+      previewUrl: 'https://play.preview.craftsmanplus.com/preview/?portrait=true&orientationLocked=true&playable=https://s3.us-east-1.amazonaws.com/production-elasticbeanstalk-environmen-databucket-1v9icak6ecq6y/1662558280520_1662558280520.tmp',
+      thumbnail: 'thumbnails/dk-same-game-parlay.jpg'
+    },
+    {
+      id: 's4',
+      company: 'Horseplay',
+      title: 'Atlantis Thunder',
+      category: 'Gambling',
+      tags: ['horseplay', 'casino', 'slots'],
+      previewUrl: 'https://play.preview.craftsmanplus.com/preview?playable=8aoKd9j73nS/3UizbBwFqCR&companyId=B630HMOcIup&creativeId=8aoKd9j73nS&name=Atlantis%20Thunder%20V02&portrait=true&ratio=2:1',
+      thumbnail: 'thumbnails/horseplay-atlantis-thunder.jpg'
+    },
+    {
+      id: 's5',
+      company: 'Horseplay',
+      title: 'Lady Lava',
+      category: 'Gambling',
+      tags: ['horseplay', 'casino', 'slots'],
+      previewUrl: 'https://play.preview.craftsmanplus.com/preview?portrait=true&playable=https://endpoints.prod.craftsmanplus.com/exports/B4ywPtmctbf/iY3mkFNXPOT/Default_Desktop__partner_template.html&companyId=B630HMOcIup',
+      thumbnail: 'thumbnails/horseplay-lady-lava.jpg'
+    },
+    {
+      id: 's6',
+      company: 'Live Play',
+      title: 'Bingo — Board Drop',
+      category: 'Gambling',
+      tags: ['bingo', 'casino', 'live play'],
+      previewUrl: 'https://play.preview.craftsmanplus.com/preview?portrait=true&playable=https://s3.us-east-1.amazonaws.com/production-elasticbeanstalk-environmen-databucket-1v9icak6ecq6y/1668202271278_1668202271278.html',
+      thumbnail: 'thumbnails/liveplay-bingo-board-drop.jpg'
+    },
+    {
+      id: 's7',
+      company: 'Live Play',
+      title: 'Bingo — Drag and Drop',
+      category: 'Gambling',
+      tags: ['bingo', 'casino', 'live play'],
+      previewUrl: 'https://play.preview.craftsmanplus.com/preview?portrait=true&playable=https://s3.us-east-1.amazonaws.com/production-elasticbeanstalk-environmen-databucket-1v9icak6ecq6y/1668202271278_1668202271278.html',
+      thumbnail: 'thumbnails/liveplay-bingo-drag.jpg'
+    },
+    {
+      id: 's8',
+      company: 'Bspot',
+      title: 'Golden Bards',
+      category: 'Gambling',
+      tags: ['bspot', 'slots', 'gambling'],
+      previewUrl: 'https://play.preview.craftsmanplus.com/preview/?playable=https://production-static-playables.s3.amazonaws.com/test/90bspot/16/audio_on/index.html?portrait=true',
+      thumbnail: 'thumbnails/bspot-golden-bards.jpg'
+    },
+    {
+      id: 's9',
+      company: 'Florida Lottery',
+      title: 'Monopoly Scratcher',
+      category: 'Lottery',
+      tags: ['lottery', 'scratch', 'monopoly'],
+      previewUrl: 'https://play.preview.craftsmanplus.com/preview/?playable=https://production-static-playables.s3.amazonaws.com/test/76ppkmonopoly/12/index.html?portrait=true',
+      thumbnail: 'thumbnails/fl-lottery-monopoly.jpg'
+    },
+    {
+      id: 's10',
+      company: 'Halfdome',
+      title: 'Pointsbet Basketball',
+      category: 'Betting',
+      tags: ['betting', 'sports', 'basketball'],
+      previewUrl: 'https://play.preview.craftsmanplus.com/preview/?playable=https://production-static-playables.s3.amazonaws.com/test/123halfdome/24/index.html?portrait=true',
+      thumbnail: 'thumbnails/halfdome-pointsbet.jpg'
+    },
+    {
+      id: 's11',
+      company: 'Skillz',
+      title: 'Blackout Bingo — Cash Out',
+      category: 'Bingo',
+      tags: ['skillz', 'bingo', 'casino'],
+      previewUrl: 'https://play.preview.craftsmanplus.com/preview/?playable=https://production-static-playables.s3.amazonaws.com/test/82skillz/blackoutblitz/14/index.html?portrait=true',
+      thumbnail: 'thumbnails/skillz-blackout-bingo.jpg'
+    }
+  ];
+
+  // ─────────────────────────────────────────────────────────────
+  // CONFIG — matches existing Playable Catalog JSON structure
+  // ─────────────────────────────────────────────────────────────
+  const JSON_PATH  = 'Playable_Endpoint_URLs.json';
+  const THUMB_BASE = 'thumbnails/';
+
+  // ─────────────────────────────────────────────────────────────
+  // HELPERS
+  // ─────────────────────────────────────────────────────────────
+  const norm  = str => (str || '').toString().trim();
+  const lower = str => norm(str).toLowerCase();
+
+  function getEndpoint(item) {
+    return norm(item['Endpoint URL'] || item.Endpoint || item.endpoint || item.endpoint_url);
+  }
+  function getExternal(item) {
+    return norm(item.URL || item.Url || item.link || item.preview || item.Preview);
+  }
+  function getThumb(item) {
+    const t = norm(item.thumbnail || item.Thumbnail);
+    if (!t) return '';
+    return t.startsWith('thumbnails/') ? t : THUMB_BASE + t;
+  }
+  function getCompany(item) {
+    return norm(item.Company || item.company || item['Company Name'] || item.Client || '');
+  }
+  function getTitle(item) {
+    return norm(item.Title || item.title || item['Playable Title'] || '');
+  }
+  function getGenre(item) {
+    return lower(item.Genre || item.genre || item['Genre '] || item['genre ']);
+  }
+  function getRawUrl(previewUrl) {
+    try {
+      const u = new URL(previewUrl);
+      const p = u.searchParams.get('playable');
+      if (p && p.startsWith('http')) return p;
+    } catch(_) {}
+    return previewUrl;
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // STATE
+  // ─────────────────────────────────────────────────────────────
+  let allItems = [];
+  let searchTerm = '';
+  let activeSection = 'all';
+  let activeCompany = '';
+
+  // ─────────────────────────────────────────────────────────────
+  // PLACEHOLDER SVG
+  // ─────────────────────────────────────────────────────────────
+  const PH = `<div class="thumb-ph">
+    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="4" y="2" width="24" height="28" rx="4" stroke="currentColor" stroke-width="1.5"/>
+      <circle cx="16" cy="14" r="4.5" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M6 26 C9 21 12.5 18.5 16 18.5 C19.5 18.5 23 21 26 26" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+    <span>No preview</span>
+  </div>`;
+
+  // ─────────────────────────────────────────────────────────────
+  // CARD BUILDER
+  // ─────────────────────────────────────────────────────────────
+  function makeCard(company, title, thumb, category, tags, isStandout, onClickFn) {
+    const card = document.createElement('div');
+    card.className = isStandout ? 'card standout' : 'card';
+    card.dataset.company = lower(company);
+    card.dataset.title   = lower(title);
+
+    const escapedPH = PH.replace(/`/g, '\\`');
+    const thumbHtml = thumb
+      ? `<img src="${thumb}" alt="${company}" onerror="this.parentElement.innerHTML=\`${escapedPH}\`" />`
+      : PH;
+
+    card.innerHTML = `
+      <div class="card-thumb">
+        ${thumbHtml}
+        ${isStandout ? '<span class="standout-badge">★ Standout</span>' : ''}
+        <div class="play-overlay">
+          <div class="play-circle">
+            <svg viewBox="0 0 16 16"><path d="M4 2.5l9 5.5-9 5.5V2.5z"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <p class="card-company">${company || '—'}</p>
+        <p class="card-title">${title || '—'}</p>
+      </div>`;
+
+    card.addEventListener('click', onClickFn);
+    return card;
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // RENDER STANDOUTS
+  // ─────────────────────────────────────────────────────────────
+  const standoutsGrid    = document.getElementById('standoutsGrid');
+  const standoutsSection = document.getElementById('standoutsSection');
+  const standoutsCount   = document.getElementById('standoutsCount');
+
+  STANDOUTS.forEach(p => {
+    const card = makeCard(p.company, p.title, p.thumbnail, p.category, p.tags, true, () => {
+      openModalStandout(p);
+    });
+    standoutsGrid.appendChild(card);
+  });
+  standoutsCount.textContent = `${STANDOUTS.length} featured`;
+
+  // ─────────────────────────────────────────────────────────────
+  // LOAD JSON + RENDER BRAND/GAMING
+  // ─────────────────────────────────────────────────────────────
+  const brandGrid    = document.getElementById('brandGrid');
+  const gamingGrid   = document.getElementById('gamingGrid');
+  const brandSection = document.getElementById('brandSection');
+  const gamingSection= document.getElementById('gamingSection');
+  const brandCount   = document.getElementById('brandCount');
+  const gamingCount  = document.getElementById('gamingCount');
+  const brandEmpty   = document.getElementById('brandEmpty');
+  const gamingEmpty  = document.getElementById('gamingEmpty');
+  const companySelect= document.getElementById('companySelect');
+
+  async function loadData() {
+    const r = await fetch(JSON_PATH + '?_=' + Date.now());
+    if (!r.ok) throw new Error('Could not load: ' + JSON_PATH);
+    allItems = await r.json();
+    allItems = allItems
+      .map(x => ({ ...x, Genre: (() => { const g = lower(x.Genre || x.genre || x['Genre '] || x['genre ']); return g === 'brand' ? 'brand' : g === 'gaming' ? 'gaming' : g; })() }))
+      .filter(x => x.Genre === 'brand' || x.Genre === 'gaming');
+
+    buildCompanyDropdown();
+    renderJsonItems();
+  }
+
+  function buildCompanyDropdown() {
+    const companies = Array.from(new Set(allItems.map(getCompany).filter(Boolean))).sort();
+    companySelect.innerHTML = '<option value="">All clients</option>';
+    companies.forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c; opt.textContent = c;
+      companySelect.appendChild(opt);
+    });
+  }
+
+  function renderJsonItems() {
+    const q = searchTerm;
+    const co = activeCompany;
+
+    // Clear existing JSON cards (keep empty state divs)
+    [...brandGrid.children].forEach(c => { if (!c.classList.contains('empty-state')) c.remove(); });
+    [...gamingGrid.children].forEach(c => { if (!c.classList.contains('empty-state')) c.remove(); });
+
+    const brand  = allItems.filter(x => x.Genre === 'brand');
+    const gaming = allItems.filter(x => x.Genre === 'gaming');
+
+    let bCount = 0, gCount = 0;
+
+    brand.forEach(item => {
+      const company = getCompany(item);
+      const title   = getTitle(item);
+      if (q && !lower(company).includes(q) && !lower(title).includes(q)) return;
+      if (co && company !== co) return;
+      const card = makeCard(company, title, getThumb(item), 'Brand', [], false, () => openModalJson(item));
+      brandGrid.appendChild(card);
+      bCount++;
+    });
+
+    gaming.forEach(item => {
+      const company = getCompany(item);
+      const title   = getTitle(item);
+      if (q && !lower(company).includes(q) && !lower(title).includes(q)) return;
+      if (co && company !== co) return;
+      const card = makeCard(company, title, getThumb(item), 'Gaming', [], false, () => openModalJson(item));
+      gamingGrid.appendChild(card);
+      gCount++;
+    });
+
+    brandCount.textContent  = `${bCount} playable${bCount !== 1 ? 's' : ''}`;
+    gamingCount.textContent = `${gCount} playable${gCount !== 1 ? 's' : ''}`;
+    brandEmpty.classList.toggle('show', bCount === 0);
+    gamingEmpty.classList.toggle('show', gCount === 0);
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // SECTION + SEARCH FILTERS
+  // ─────────────────────────────────────────────────────────────
+  document.getElementById('searchInput').addEventListener('input', e => {
+    searchTerm = lower(e.target.value.trim());
+    applyFilters();
+  });
+
+  document.getElementById('sectionSelect').addEventListener('change', e => {
+    activeSection = e.target.value;
+    applyFilters();
+  });
+
+  companySelect.addEventListener('change', e => {
+    activeCompany = norm(e.target.value);
+    renderJsonItems();
+  });
+
+  function applyFilters() {
+    const q = searchTerm;
+
+    // Standouts: filter by name match
+    let sVisible = 0;
+    [...standoutsGrid.querySelectorAll('.card')].forEach(card => {
+      const match = !q || card.dataset.company.includes(q) || card.dataset.title.includes(q);
+      const sectionMatch = activeSection === 'all' || activeSection === 'standouts';
+      card.classList.toggle('hidden', !(match && sectionMatch));
+      if (match && sectionMatch) sVisible++;
+    });
+    standoutsSection.style.display = (activeSection === 'brand' || activeSection === 'gaming') ? 'none' : '';
+
+    // Brand/Gaming: re-render
+    brandSection.style.display  = (activeSection === 'gaming' || activeSection === 'standouts') ? 'none' : '';
+    gamingSection.style.display = (activeSection === 'brand'  || activeSection === 'standouts') ? 'none' : '';
+
+    if (activeSection !== 'standouts') renderJsonItems();
+    standoutsCount.textContent = `${sVisible} featured`;
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // MODAL
+  // ─────────────────────────────────────────────────────────────
+  const overlay  = document.getElementById('overlay');
+  const mIframe  = document.getElementById('mIframe');
+  const mTitle   = document.getElementById('mTitle');
+  const mCat     = document.getElementById('mCat');
+  const mTags    = document.getElementById('mTags');
+  const mExternal= document.getElementById('mExternal');
+
+  function openModal(titleText, catText, tagsArr, iframeSrc, externalUrl) {
+    mTitle.textContent = titleText;
+    mCat.textContent   = catText;
+    mCat.className     = `modal-cat ${catText}`;
+    mTags.innerHTML    = tagsArr.map(t => `<span class="tag">${t}</span>`).join('');
+    mExternal.href     = externalUrl || '#';
+    mIframe.src        = getRawUrl(iframeSrc);
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function openModalStandout(p) {
+    openModal(
+      `${p.company} — ${p.title}`,
+      p.category,
+      p.tags,
+      p.previewUrl,
+      p.previewUrl
+    );
+  }
+
+  function openModalJson(item) {
+    const company  = getCompany(item);
+    const title    = getTitle(item);
+    const genre    = getGenre(item);
+    const endpoint = getEndpoint(item);
+    const external = getExternal(item) || endpoint;
+    const cat      = genre === 'brand' ? 'Brand' : 'Gaming';
+    openModal(
+      `${company}${title ? ' — ' + title : ''}`,
+      cat,
+      [],
+      endpoint || external,
+      external
+    );
+  }
+
+  function closeModal() {
+    overlay.classList.remove('open');
+    setTimeout(() => { mIframe.src = ''; }, 220);
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('mClose').addEventListener('click', closeModal);
+  document.getElementById('mReload').addEventListener('click', () => {
+    const src = mIframe.src;
+    mIframe.src = '';
+    setTimeout(() => { mIframe.src = src; }, 80);
+  });
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  // ─────────────────────────────────────────────────────────────
+  // INIT
+  // ─────────────────────────────────────────────────────────────
+  loadData().catch(err => {
+    console.error(err);
+    brandGrid.innerHTML = `<div style="padding:16px;color:var(--orange);">${err.message}</div>`;
+  });
+  </script>
+</body>
+</html>
