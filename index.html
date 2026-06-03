@@ -417,6 +417,7 @@
     .modal-cat.Gambling { color: var(--amber);   border: 1px solid rgba(245,158,11,0.4); background: var(--amber-dim); }
     .modal-cat.Betting  { color: var(--amber);   border: 1px solid rgba(245,158,11,0.4); background: var(--amber-dim); }
     .modal-cat.Bingo    { color: var(--emerald); border: 1px solid rgba(52,211,153,0.4); background: var(--emerald-dim); }
+    .modal-cat.RMG      { color: var(--orange);  border: 1px solid rgba(248,100,0,0.4);   background: var(--orange-dim); }
 
     .modal-title {
       font-family: var(--serif);
@@ -590,7 +591,7 @@
     <div class="nav-right">
       <select id="sectionSelect" class="nav-select">
         <option value="all">All sections</option>
-        <option value="standouts">Standouts</option>
+        <option value="rmg">RMG</option>
         <option value="brand">Brand</option>
         <option value="gaming">Gaming</option>
       </select>
@@ -610,14 +611,16 @@
   <!-- CONTENT -->
   <div class="content">
 
-    <!-- STANDOUTS -->
-    <div class="section" id="standoutsSection">
+    <!-- RMG -->
+    <div class="section" id="rmgSection">
       <div class="section-header">
-        <span class="section-label standouts">★ Standouts</span>
+        <span class="section-label standouts">★ RMG</span>
         <div class="section-rule standouts"></div>
-        <span class="section-count" id="standoutsCount"></span>
+        <span class="section-count" id="rmgCount"></span>
       </div>
-      <div class="catalog-grid" id="standoutsGrid"></div>
+      <div class="catalog-grid" id="rmgGrid">
+        <div class="empty-state" id="rmgEmpty"><p>No results.</p></div>
+      </div>
     </div>
 
     <!-- BRAND -->
@@ -698,7 +701,7 @@
       title: 'Game of Thrones Slots — Double Spin',
       category: 'Gambling',
       tags: ['zynga', 'slots', 'gambling'],
-      previewUrl: 'https://s3.us-east-1.amazonaws.com/production-elasticbeanstalk-environmen-databucket-1v9icak6ecq6y/1648677929451-1648677929451.tmp',
+      previewUrl: 'https://play.preview.craftsmanplus.com/preview/?portrait=true&orientationLocked=true&playable=https://s3.us-east-1.amazonaws.com/production-elasticbeanstalk-environmen-databucket-1v9icak6ecq6y/1648677929451-1648677929451.tmp',
       thumbnail: 'thumbnails/zynga-got-double-spin.jpg'
     },
     {
@@ -707,7 +710,7 @@
       title: 'Fantasy Sports — Questionnaire Polls',
       category: 'Gambling',
       tags: ['draftkings', 'fantasy', 'gambling'],
-      previewUrl: 'https://s3.us-east-1.amazonaws.com/production-elasticbeanstalk-environmen-databucket-1v9icak6ecq6y/1660836400523_1660836400523.tmp',
+      previewUrl: 'https://play.preview.craftsmanplus.com/preview/?portrait=true&orientationLocked=true&playable=https://s3.us-east-1.amazonaws.com/production-elasticbeanstalk-environmen-databucket-1v9icak6ecq6y/1660836400523_1660836400523.tmp',
       thumbnail: 'thumbnails/dk-questionnaire-polls.jpg'
     },
     {
@@ -716,7 +719,7 @@
       title: 'Sportsbook — Same Game Parlay',
       category: 'Gambling',
       tags: ['draftkings', 'sportsbook', 'gambling'],
-      previewUrl: 'https://s3.us-east-1.amazonaws.com/production-elasticbeanstalk-environmen-databucket-1v9icak6ecq6y/1662558280520_1662558280520.tmp',
+      previewUrl: 'https://play.preview.craftsmanplus.com/preview/?portrait=true&orientationLocked=true&playable=https://s3.us-east-1.amazonaws.com/production-elasticbeanstalk-environmen-databucket-1v9icak6ecq6y/1662558280520_1662558280520.tmp',
       thumbnail: 'thumbnails/dk-same-game-parlay.jpg'
     },
     {
@@ -726,7 +729,7 @@
       category: 'Gambling',
       tags: ['horseplay', 'casino', 'slots'],
       previewUrl: 'https://play.preview.craftsmanplus.com/preview?playable=8aoKd9j73nS/3UizbBwFqCR&companyId=B630HMOcIup&creativeId=8aoKd9j73nS&name=Atlantis%20Thunder%20V02&portrait=true&ratio=2:1',
-      thumbnail: 'thumbnails/horseplay-atlantis-thunder'
+      thumbnail: 'thumbnails/horseplay-atlantis-thunder.jpg'
     },
     {
       id: 's5',
@@ -879,19 +882,12 @@
   }
 
   // ─────────────────────────────────────────────────────────────
-  // RENDER STANDOUTS
+  // RMG grid elements (populated from JSON after load)
   // ─────────────────────────────────────────────────────────────
-  const standoutsGrid    = document.getElementById('standoutsGrid');
-  const standoutsSection = document.getElementById('standoutsSection');
-  const standoutsCount   = document.getElementById('standoutsCount');
-
-  STANDOUTS.forEach(p => {
-    const card = makeCard(p.company, p.title, p.thumbnail, p.category, p.tags, true, () => {
-      openModalStandout(p);
-    });
-    standoutsGrid.appendChild(card);
-  });
-  standoutsCount.textContent = `${STANDOUTS.length} featured`;
+  const rmgGrid    = document.getElementById('rmgGrid');
+  const rmgSection = document.getElementById('rmgSection');
+  const rmgCount   = document.getElementById('rmgCount');
+  const rmgEmpty   = document.getElementById('rmgEmpty');
 
   // ─────────────────────────────────────────────────────────────
   // LOAD JSON + RENDER BRAND/GAMING
@@ -911,8 +907,8 @@
     if (!r.ok) throw new Error('Could not load: ' + JSON_PATH);
     allItems = await r.json();
     allItems = allItems
-      .map(x => ({ ...x, Genre: (() => { const g = lower(x.Genre || x.genre || x['Genre '] || x['genre ']); return g === 'brand' ? 'brand' : g === 'gaming' ? 'gaming' : g; })() }))
-      .filter(x => x.Genre === 'brand' || x.Genre === 'gaming');
+      .map(x => ({ ...x, Genre: (() => { const g = lower(x.Genre || x.genre || x['Genre '] || x['genre ']); return g === 'brand' ? 'brand' : g === 'gaming' ? 'gaming' : g === 'rmg' ? 'rmg' : g; })() }))
+      .filter(x => x.Genre === 'brand' || x.Genre === 'gaming' || x.Genre === 'rmg');
 
     buildCompanyDropdown();
     renderJsonItems();
@@ -929,17 +925,29 @@
   }
 
   function renderJsonItems() {
-    const q = searchTerm;
+    const q  = searchTerm;
     const co = activeCompany;
 
-    // Clear existing JSON cards (keep empty state divs)
+    // Clear existing cards (keep empty state divs)
+    [...rmgGrid.children].forEach(c   => { if (!c.classList.contains('empty-state')) c.remove(); });
     [...brandGrid.children].forEach(c => { if (!c.classList.contains('empty-state')) c.remove(); });
-    [...gamingGrid.children].forEach(c => { if (!c.classList.contains('empty-state')) c.remove(); });
+    [...gamingGrid.children].forEach(c=> { if (!c.classList.contains('empty-state')) c.remove(); });
 
+    const rmg    = allItems.filter(x => x.Genre === 'rmg');
     const brand  = allItems.filter(x => x.Genre === 'brand');
     const gaming = allItems.filter(x => x.Genre === 'gaming');
 
-    let bCount = 0, gCount = 0;
+    let rCount = 0, bCount = 0, gCount = 0;
+
+    rmg.forEach(item => {
+      const company = getCompany(item);
+      const title   = getTitle(item);
+      if (q && !lower(company).includes(q) && !lower(title).includes(q)) return;
+      if (co && company !== co) return;
+      const card = makeCard(company, title, 'thumbnails/' + item.thumbnail, 'RMG', [], true, () => openModalJson(item));
+      rmgGrid.appendChild(card);
+      rCount++;
+    });
 
     brand.forEach(item => {
       const company = getCompany(item);
@@ -961,10 +969,12 @@
       gCount++;
     });
 
+    rmgCount.textContent    = `${rCount} playable${rCount !== 1 ? 's' : ''}`;
     brandCount.textContent  = `${bCount} playable${bCount !== 1 ? 's' : ''}`;
     gamingCount.textContent = `${gCount} playable${gCount !== 1 ? 's' : ''}`;
+    rmgEmpty.classList.toggle('show',   rCount === 0);
     brandEmpty.classList.toggle('show', bCount === 0);
-    gamingEmpty.classList.toggle('show', gCount === 0);
+    gamingEmpty.classList.toggle('show',gCount === 0);
   }
 
   // ─────────────────────────────────────────────────────────────
@@ -986,24 +996,11 @@
   });
 
   function applyFilters() {
-    const q = searchTerm;
-
-    // Standouts: filter by name match
-    let sVisible = 0;
-    [...standoutsGrid.querySelectorAll('.card')].forEach(card => {
-      const match = !q || card.dataset.company.includes(q) || card.dataset.title.includes(q);
-      const sectionMatch = activeSection === 'all' || activeSection === 'standouts';
-      card.classList.toggle('hidden', !(match && sectionMatch));
-      if (match && sectionMatch) sVisible++;
-    });
-    standoutsSection.style.display = (activeSection === 'brand' || activeSection === 'gaming') ? 'none' : '';
-
-    // Brand/Gaming: re-render
-    brandSection.style.display  = (activeSection === 'gaming' || activeSection === 'standouts') ? 'none' : '';
-    gamingSection.style.display = (activeSection === 'brand'  || activeSection === 'standouts') ? 'none' : '';
-
-    if (activeSection !== 'standouts') renderJsonItems();
-    standoutsCount.textContent = `${sVisible} featured`;
+    // Show/hide sections based on active filter
+    rmgSection.style.display    = (activeSection === 'brand' || activeSection === 'gaming') ? 'none' : '';
+    brandSection.style.display  = (activeSection === 'gaming' || activeSection === 'rmg')   ? 'none' : '';
+    gamingSection.style.display = (activeSection === 'brand'  || activeSection === 'rmg')   ? 'none' : '';
+    renderJsonItems();
   }
 
   // ─────────────────────────────────────────────────────────────
@@ -1028,29 +1025,34 @@
   }
 
   function openModalStandout(p) {
-    openModal(
-      `${p.company} — ${p.title}`,
-      p.category,
-      p.tags,
-      p.previewUrl,
-      p.previewUrl
-    );
+    // Standouts use the full preview wrapper URL — do not strip to raw endpoint
+    mTitle.textContent = `${p.company} — ${p.title}`;
+    mCat.textContent   = p.category;
+    mCat.className     = `modal-cat ${p.category}`;
+    mTags.innerHTML    = p.tags.map(t => `<span class="tag">${t}</span>`).join('');
+    mExternal.href     = p.previewUrl;
+    mIframe.src        = p.previewUrl;
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
   }
 
   function openModalJson(item) {
     const company  = getCompany(item);
     const title    = getTitle(item);
     const genre    = getGenre(item);
-    const endpoint = getEndpoint(item);
-    const external = getExternal(item) || endpoint;
     const cat      = genre === 'brand' ? 'Brand' : 'Gaming';
-    openModal(
-      `${company}${title ? ' — ' + title : ''}`,
-      cat,
-      [],
-      endpoint || external,
-      external
-    );
+    // Use URL field (full preview wrapper) for iframe — Endpoint URL for fallback only
+    const previewUrl = getExternal(item) || getEndpoint(item);
+    const titleText  = `${company}${title ? ' — ' + title : ''}`;
+
+    mTitle.textContent = titleText;
+    mCat.textContent   = cat;
+    mCat.className     = `modal-cat ${cat}`;
+    mTags.innerHTML    = '';
+    mExternal.href     = previewUrl;
+    mIframe.src        = previewUrl;
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
   }
 
   function closeModal() {
