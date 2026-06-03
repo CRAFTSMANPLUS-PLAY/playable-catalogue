@@ -27,9 +27,9 @@
     "Title": "Atlantis Thunder",
     "Company": "Horseplay",
     "Genre": "RMG",
-    "URL": "https://play.preview.craftsmanplus.com/preview?playable=8aoKd9j73nS/3UizbBwFqCR&companyId=B630HMOcIup&creativeId=8aoKd9j73nS&name=Atlantis%20Thunder%20V02&portrait=true&ratio=2:1",
-    "Endpoint URL": "https://play.preview.craftsmanplus.com/preview?playable=8aoKd9j73nS/3UizbBwFqCR&companyId=B630HMOcIup&creativeId=8aoKd9j73nS&name=Atlantis%20Thunder%20V02&portrait=true&ratio=2:1",
-    "thumbnail": "horseplay-atlantis-thunder"
+    "URL": "https://play.preview.craftsmanplus.com/?playable=8aoKd9j73nS%2F3UizbBwFqCR&companyId=B630HMOcIup&creativeId=8aoKd9j73nS&name=Atlantis%20Thunder%20V02&portrait=true&ratio=2:1",
+    "Endpoint URL": "https://endpoints.prod.craftsmanplus.com/previews/8aoKd9j73nS/3UizbBwFqCR/index.html",
+    "thumbnail": "horseplay-atlantis-thunder.jpg"
   },
   {
     "Title": "Lady Lava",
