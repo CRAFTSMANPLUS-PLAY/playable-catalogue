@@ -949,20 +949,20 @@
   }
 
   function openModalJson(item) {
-    const company  = getCompany(item);
-    const title    = getTitle(item);
-    const genre    = getGenre(item);
-    const cat      = genre === 'brand' ? 'Brand' : 'Gaming';
-    // Use URL field (full preview wrapper) for iframe — Endpoint URL for fallback only
-    const previewUrl = getExternal(item) || getEndpoint(item);
+    const company    = getCompany(item);
+    const title      = getTitle(item);
+    const genre      = getGenre(item);
+    const cat        = genre === 'rmg' ? 'RMG' : genre === 'brand' ? 'Brand' : 'Gaming';
+    const endpoint   = getEndpoint(item);            // Endpoint URL → iframe
+    const externalUrl= getExternal(item) || endpoint; // URL field → Open External button
     const titleText  = `${company}${title ? ' — ' + title : ''}`;
 
     mTitle.textContent = titleText;
     mCat.textContent   = cat;
     mCat.className     = `modal-cat ${cat}`;
     mTags.innerHTML    = '';
-    mExternal.href     = previewUrl;
-    mIframe.src        = previewUrl;
+    mExternal.href     = externalUrl;
+    mIframe.src        = endpoint;
     overlay.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
