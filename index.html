@@ -729,7 +729,7 @@
       category: 'Gambling',
       tags: ['horseplay', 'casino', 'slots'],
       previewUrl: 'https://play.preview.craftsmanplus.com/preview?playable=8aoKd9j73nS/3UizbBwFqCR&companyId=B630HMOcIup&creativeId=8aoKd9j73nS&name=Atlantis%20Thunder%20V02&portrait=true&ratio=2:1',
-      thumbnail: 'thumbnails/horseplay-atlantis-thunder'
+      thumbnail: 'thumbnails/horseplay-atlantis-thunder.jpg'
     },
     {
       id: 's5',
@@ -836,47 +836,49 @@
   let activeSection = 'all';
   let activeCompany = '';
 
-  // ─────────────────────────────────────────────────────────────
-  // PLACEHOLDER SVG
-  // ─────────────────────────────────────────────────────────────
-  const PH = `<div class="thumb-ph">
-    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="4" y="2" width="24" height="28" rx="4" stroke="currentColor" stroke-width="1.5"/>
-      <circle cx="16" cy="14" r="4.5" stroke="currentColor" stroke-width="1.5"/>
-      <path d="M6 26 C9 21 12.5 18.5 16 18.5 C19.5 18.5 23 21 26 26" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-    </svg>
-    <span>No preview</span>
-  </div>`;
+
 
   // ─────────────────────────────────────────────────────────────
   // CARD BUILDER
   // ─────────────────────────────────────────────────────────────
+  function makePlaceholder(el) {
+    el.innerHTML = '<div class="thumb-ph"><svg viewBox="0 0 32 32" fill="none"><rect x="4" y="2" width="24" height="28" rx="4" stroke="currentColor" stroke-width="1.5"/><circle cx="16" cy="14" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M6 26 C9 21 12.5 18.5 16 18.5 C19.5 18.5 23 21 26 26" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span>No preview</span></div>';
+  }
+
   function makeCard(company, title, thumb, category, tags, isStandout, onClickFn) {
     const card = document.createElement('div');
     card.className = isStandout ? 'card standout' : 'card';
     card.dataset.company = lower(company);
     card.dataset.title   = lower(title);
 
-    const escapedPH = PH.replace(/`/g, '\\`');
-    const thumbHtml = thumb
-      ? `<img src="${thumb}" alt="${company}" onerror="this.parentElement.innerHTML=\`${escapedPH}\`" />`
-      : PH;
+    const thumbWrap = document.createElement('div');
+    thumbWrap.className = 'card-thumb';
 
-    card.innerHTML = `
-      <div class="card-thumb">
-        ${thumbHtml}
-        ${isStandout ? '<span class="standout-badge">★ Standout</span>' : ''}
-        <div class="play-overlay">
-          <div class="play-circle">
-            <svg viewBox="0 0 16 16"><path d="M4 2.5l9 5.5-9 5.5V2.5z"/></svg>
-          </div>
-        </div>
-      </div>
-      <div class="card-footer">
-        <p class="card-company">${company || '—'}</p>
-        <p class="card-title">${title || '—'}</p>
-      </div>`;
+    if (thumb) {
+      const img = document.createElement('img');
+      img.src = thumb;
+      img.alt = company;
+      img.addEventListener('error', () => makePlaceholder(thumbWrap));
+      thumbWrap.appendChild(img);
+    } else {
+      makePlaceholder(thumbWrap);
+    }
 
+    if (isStandout) {
+      const badge = document.createElement('span');
+      badge.className = 'standout-badge';
+      badge.textContent = '★ Standout';
+      thumbWrap.appendChild(badge);
+    }
+
+    thumbWrap.insertAdjacentHTML('beforeend', '<div class="play-overlay"><div class="play-circle"><svg viewBox="0 0 16 16"><path d="M4 2.5l9 5.5-9 5.5V2.5z"/></svg></div></div>');
+
+    const footer = document.createElement('div');
+    footer.className = 'card-footer';
+    footer.innerHTML = '<p class="card-company">' + (company || '—') + '</p><p class="card-title">' + (title || '—') + '</p>';
+
+    card.appendChild(thumbWrap);
+    card.appendChild(footer);
     card.addEventListener('click', onClickFn);
     return card;
   }
